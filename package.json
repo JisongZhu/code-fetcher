@@ -1,0 +1,8 @@
+{
+    "name": "code-fetcher",
+    "version": "0.0.1",
+    "description": "Fetch code",
+    "dependencies": {
+        "underscore.string": "*"
+    }
+}
