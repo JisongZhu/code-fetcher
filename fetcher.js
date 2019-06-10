@@ -2,16 +2,28 @@ var fs = require('fs');
 var path = require('path');
 var _str = require('underscore.string');
 
+/**
+ * 后缀过滤。只拉取数组中列举的后缀文件。
+ */
 var extensions = [".ts", ".tsx"]; // ['.js', '.css']
+/**
+ * 源文件的路径数组。
+ */
 var files = [
     'D:\\projects\\gitlab\\simonli\\web\\src\\components\\SleepVideoView.tsx'
 ];
+/**
+ * 源代码文件目录。当某一个目录里面的文件都需要拉取出来时，可以将目录的地址加到数组中，而不需要一个一个地把文件路径添加到files数组。
+ */
 var folders = [
     // 'D:\\projects\\gitlab\\simonli\\web\\src\\components\\common',
     'D:\\projects\\gitlab\\simonli\\web\\src\\components\\pages',
     // 'D:\\projects\\gitlab\\simonli\\web-mobile\\src\\components\\pages',
     'D:\\projects\\gitlab\\simonli\\web\\src\\models\\product'
 ];
+/**
+ * 合并后的源码文件路径。
+ */
 var dest = path.join(__dirname, 'result.txt');
 
 var totalCode = '';
