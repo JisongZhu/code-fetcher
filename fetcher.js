@@ -2,17 +2,17 @@ var fs = require('fs');
 var path = require('path');
 var _str = require('underscore.string');
 
-var extensions = []; // ['.js', '.css']
+var extensions = [".ts", ".tsx"]; // ['.js', '.css']
 var files = [
-    '/home/zjs/project/solution-antique/manager/src/app.js'
+    'D:\\projects\\gitlab\\simonli\\web\\src\\components\\SleepVideoView.tsx'
 ];
 var folders = [
-    '/home/zjs/project/solution-antique/client/src/x3ui/js',
-    '/home/zjs/project/solution-antique/client/src/viewer/js',
-    '/home/zjs/project/solution-antique/manager/src/lib',
-    '/home/zjs/project/solution-antique/manager/src/static/js'
+    // 'D:\\projects\\gitlab\\simonli\\web\\src\\components\\common',
+    'D:\\projects\\gitlab\\simonli\\web\\src\\components\\pages',
+    // 'D:\\projects\\gitlab\\simonli\\web-mobile\\src\\components\\pages',
+    'D:\\projects\\gitlab\\simonli\\web\\src\\models\\product'
 ];
-var dest = '/home/zjs/project/code-fetcher/result.txt';
+var dest = path.join(__dirname, 'result.txt');
 
 var totalCode = '';
 
@@ -20,9 +20,12 @@ function checkExtension(filePath) {
     if (!extensions || extensions.length === 0) {
         return true;
     } else {
+        var checked = false;
         for (var n = 0; n < extensions.length; n++) {
-            return _str.endsWith(filePath, extensions[n]);
+            checked = _str.endsWith(filePath, extensions[n]);
+            if(checked) break;
         }
+        return checked;
     }
 
     return false;
@@ -82,10 +85,21 @@ function traverseFolder(folderPath) {
     console.log('==========================================');
 }
 
-for (var j = 0; j < folders.length; j++) {
-    traverseFolder(folders[j]);
+
+
+var run = function (){
+    console.log("Clear old file...");
+    fs.writeFileSync(dest, "");
+    for (var j = 0; j < folders.length; j++) {
+        traverseFolder(folders[j]);
+    }
+
+    for (var k = 0; k < files.length; k++) {
+        readFile(files[k]);
+    }
+    var content = fs.readFileSync(dest);
+    var lines = _str.lines(content);
+    console.log("Total", lines.length);
 }
 
-for (var k = 0; k < files.length; k++) {
-    readFile(files[k]);
-}
+run();
